@@ -1,25 +1,34 @@
 import { V2_MetaFunction, json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { client } from "../models/contentful.server";
+import Header from "~/components/Header";
+import { Hero } from "~/components/Hero";
+import { RecentClients } from "~/components/RecentClients";
+import { Process } from "~/components/Process";
+import { Experts } from "~/components/Experts";
+import { CTAFullScreen } from "~/components/CTAFullScreen";
+import { About } from "~/components/About";
+import { RecentArticles } from "~/components/RecentArticles";
 
 export const meta: V2_MetaFunction = () => {
-  return [{ title: "New Remix App" }];
+  return [{ title: "Added Performance Machining" }];
 };
 
 export async function loader() {
-  return json(await client.getPage("Corgi"));
+  return json(await client.getRecentArticles());
 }
 
 export default function Index() {
-  const { title } = useLoaderData();
-  console.log(title);
+  const articles = useLoaderData();
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <div className="mx-auto mt-16 max-w-7xl text-center">
-        <Link to="/posts" className="text-xl text-blue-600 underline">
-          Blog Posts
-        </Link>
-      </div>
+    <div>
+      <Hero />
+      <RecentClients />
+      <Process />
+      <Experts />
+      <CTAFullScreen dark />
+      <About />
+      <RecentArticles data={articles} />
     </div>
   );
 }

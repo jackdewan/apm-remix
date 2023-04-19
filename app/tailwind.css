@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "carterOne";
+  src: url("/assets/CarterOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: "comfort";
+  src: url("/assets/Comfortaa-VariableFont_wght.ttf");
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
+}

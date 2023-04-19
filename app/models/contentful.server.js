@@ -16,109 +16,85 @@ async function apiCall(query, variables) {
   return await fetch(fetchUrl, options);
 }
 
-async function getProjects() {
+async function getRecentArticles() {
   const query = `
     {
-        projectsCollection (order:releaseDate_DESC){
-            items {
-                title
-                desc {
-                    json
-                }
-                releaseDate
-                link
-                previewImage {
-                    description
-                    url
-                }
+        articleCollection(order:sys_firstPublishedAt_DESC, limit: 3) {
+          total
+          items {
+            title
+            slug
+            description
+            date
+            featuredImage {
+              title
+              description
+              url
             }
-        }
-    }`;
-  const response = await apiCall(query);
-  const json = await response.json();
-  const formattedData = await json.data.projectsCollection.items.map(
-    async (project) => {
-      const { title, desc, releaseDate, link, previewImage } = project;
-      const { css, img } = await getPlaiceholder(previewImage.url);
-      return {
-        title,
-        desc,
-        releaseDate,
-        link,
-        image: img,
-        imageAlt: previewImage.description,
-        css,
-      };
-    }
-  );
-  return Promise.all(formattedData);
-}
-
-async function getTalks() {
-  const query = `{
-        talksCollection {
-            items {
-                sys {
-                    id
-                }
-                title
-                description {
-                    json
-                }
-                link
-                type
-                previewImage {
-                    description
-                    url
-                }
+            sys {
+              firstPublishedAt
+              publishedAt
             }
-        }
-    }`;
-  const response = await apiCall(query);
-  const json = await response.json();
-  return await json.data.talksCollection.items;
-}
-
-async function getAllBlogs() {
-  const query = `
-    {
-        blogCollection(order:sys_firstPublishedAt_DESC) {
-        items {
-          title
-          slug
-          description
-          tag
-          sys {
-            firstPublishedAt
           }
-        }
       }
     }
     `;
   const response = await apiCall(query);
   const json = await response.json();
-  return await json.data.blogCollection.items;
+  return await json.data.articleCollection.items;
 }
 
-async function getSingleBlog(slug) {
-  console.log("here");
+async function getAllArticles() {
+  const query = `
+    {
+        articleCollection(order:sys_firstPublishedAt_DESC) {
+          total
+          items {
+            title
+            slug
+            description
+            date
+            featuredImage {
+              title
+              description
+              url
+            }
+            sys {
+              firstPublishedAt
+              publishedAt
+            }
+          }
+      }
+    }
+    `;
+  const response = await apiCall(query);
+  const json = await response.json();
+  return await json.data.articleCollection.items;
+}
+
+async function getSingleArticle(slug) {
   const query = `
     query($slug: String){
-        blogCollection(where: {slug:$slug}) {
+        articleCollection(where: {slug:$slug}) {
             items {
+              title
+              slug
+              date
+              content
+              description
+              metaTitle
+              metaDescription
+              content
+              featuredImage {
                 title
                 description
-                tag
-                canonicalUrl
-                blogBody {
-                  json
-                }
-                sys {
-                  publishedAt
-                }
-                openGraphImage {
-                  url
-                }
+                url
+              }
+              sys {
+                firstPublishedAt
+                publishedAt
+                id
+              }
               }
             }
     }
@@ -128,7 +104,8 @@ async function getSingleBlog(slug) {
   };
   const response = await apiCall(query, variables);
   const json = await response.json();
-  return await json.data.blogCollection.items[0];
+  console.log(json);
+  return await json.data.articleCollection.items[0];
 }
 
 async function getPage(title) {
@@ -171,9 +148,8 @@ async function getPage(title) {
 }
 
 export const client = {
-  getProjects,
-  getTalks,
-  getAllBlogs,
-  getSingleBlog,
+  getAllArticles,
+  getSingleArticle,
   getPage,
+  getRecentArticles,
 };
