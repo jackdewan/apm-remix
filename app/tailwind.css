@@ -3,13 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "carterOne";
-  src: url("/assets/CarterOne-Regular.ttf");
-}
-
-@font-face {
   font-family: "comfort";
-  src: url("/assets/Comfortaa-VariableFont_wght.ttf");
+  src: url("/assets/fonts/Comfortaa-VariableFont_wght.ttf");
 }
 
 html,

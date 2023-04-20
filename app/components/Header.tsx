@@ -26,7 +26,7 @@ const chevronRight = (
 export default function Header() {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <header className="w-full sticky top-0 z-10 bg-primary">
+    <header className="w-full sticky top-0 z-10 bg-primary font-comfort">
       <div className="h-14 md:h-20 container flex justify-between items-center">
         <div className="">
           <Logo setOpen={setOpen} />
