@@ -19,7 +19,7 @@ async function apiCall(query, variables) {
 async function getRecentArticles() {
   const query = `
     {
-        articleCollection(order:sys_firstPublishedAt_DESC, limit: 3) {
+        articleCollection(order:sys_firstPublishedAt_DESC, limit: 3, where: {featured: true}) {
           total
           items {
             title
