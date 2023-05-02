@@ -29,7 +29,7 @@ export const Experts = () => {
                 alt="Mazak Quick Turn CNC Lathe"
               />
               <p className="hover:underline text-xs">
-                <a href="https://www.mazakusa.com/machines/quick-turn-100/">
+                <a href="https://www.mazakusa.com/">
                   Photo Credit: Mazak USA Corporation
                 </a>
               </p>
