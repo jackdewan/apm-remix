@@ -1,3 +1,4 @@
+import type { V2_MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ALCard } from "~/components/ALCard";
@@ -5,6 +6,10 @@ import { CTAFullScreen } from "~/components/CTAFullScreen";
 import { LearnIntro } from "~/components/LearnIntro";
 import { client } from "~/models/contentful.server";
 import { ArticleInterface } from "~/utils/interfaces";
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: "Articles | Added Performance Machining" }];
+};
 
 export const loader = async () => {
   const articles = await client.getAllArticles();

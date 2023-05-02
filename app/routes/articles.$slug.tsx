@@ -1,5 +1,5 @@
 import { marked } from "marked";
-import type { LoaderArgs } from "@remix-run/node";
+import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useParams } from "@remix-run/react";
 import { client } from "../models/contentful.server";
@@ -15,6 +15,11 @@ export const loader = async ({ params }: LoaderArgs) => {
     html,
     featuredImage: article.featuredImage,
   });
+};
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+  const title = data.title ? `${data.title} | ` : "";
+  return [{ title: `${title}Added Performance Machining` }];
 };
 
 export default function PostSlug() {
